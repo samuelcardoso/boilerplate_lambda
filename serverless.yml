@@ -1,4 +1,3 @@
-# Serverless ALL
 plugins:
   - serverless-plugin-typescript
   - serverless-offline
@@ -12,35 +11,7 @@ provider:
   stage: samuel
 
 functions:
-  all:
-    handler: src/lambda/main.all
+  run:
+    handler: src/lambda/main.run
     events:
-      - http:
-          path: /main/all
-          method: GET
-          cors: true
-          caching:
-            enabled: true
-            cacheKeyParameters:
-              - name: request.querystring.cachetick
-  add:
-    handler: src/lambda/main.add
-    events:
-      - http:
-          path: /main/
-          method: POST
-          cors: true
-  update:
-    handler: src/lambda/main.update
-    events:
-      - http:
-          path: /main/{id}
-          method: PUT
-          cors: true
-  remove:
-    handler: src/lambda/main.remove
-    events:
-      - http:
-          path: /main/
-          method: DELETE
-          cors: true
+      - schedule: rate(1 minute)
