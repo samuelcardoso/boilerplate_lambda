@@ -13,3 +13,5 @@ provider:
 functions:
   run:
     handler: src/lambda/main.run
+    events:
+      - schedule: rate(1 minute)
