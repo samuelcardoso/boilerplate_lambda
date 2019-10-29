@@ -2,6 +2,7 @@
 plugins:
   - serverless-plugin-typescript
   - serverless-offline
+  - serverless-openapi-documentation
 
 service: boilerplatelambda
 
@@ -11,6 +12,22 @@ provider:
   runtime: nodejs8.10
   stage: samuel
 
+# serverless openapi generate
+custom:
+  documentation:
+    version: '1.0.0'
+    title: 'My Rest Main API'
+    description: 'This is my API'
+    models:
+      - name: "GetMainResponse"
+        description: "Get Main Entities"
+        contentType: "application/json"
+        schema:
+          $schema: "http://json-schema.org/draft-04/schema#"
+          title : "Main"
+          type : "array"
+          items:
+            type: integer
 functions:
   all:
     handler: src/lambda/main.all
@@ -18,6 +35,15 @@ functions:
       - http:
           path: /main/all
           method: GET
+          documentation:
+            summary: Get all
+            description: Get all elements in database
+            methodResponses:
+              - statusCode: 200
+                responseBody:
+                  description: "All Main entities"
+                responseModels:
+                  application/json: "GetMainResponse"
   add:
     handler: src/lambda/main.add
     events:
