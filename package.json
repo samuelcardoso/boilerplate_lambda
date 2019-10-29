@@ -21,9 +21,7 @@
     "test": "cross-env mocha",
     "tsc": "tsc"
   },
-  "dependencies": {
-    "serverless-api-gateway-caching": "^1.3.8"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/node": "^11.10.4",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
