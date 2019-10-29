@@ -12,53 +12,129 @@ provider:
   runtime: nodejs8.10
   stage: samuel
 
-# serverless openapi generate
+# Open API documentation: serverless openapi generate
 custom:
   documentation:
-    version: '1.0.0'
-    title: 'My Rest Main API'
-    description: 'This is my API'
+    version: 1.0.0
+    title: My Rest Car API
+    description: Manage my cars
     models:
-      - name: "GetMainResponse"
-        description: "Get Main Entities"
-        contentType: "application/json"
+      # GET
+      - name: GetCarResponse
+        description: Get Car Response
+        contentType: application/json
         schema:
-          $schema: "http://json-schema.org/draft-04/schema#"
-          title : "Main"
-          type : "array"
+          $schema: http://json-schema.org/draft-04/schema#
+          title : Cars
+          type : array
           items:
-            type: integer
+            type: object
+            properties:
+              name:
+                type: string
+      # ADD
+      - name: AddCarResponse
+        description: Add Car Response
+        contentType: application/json
+        schema:
+          $schema: http://json-schema.org/draft-04/schema#
+          title : Id
+          type : integer
+      - name: AddCarRequest
+        description: Add Car Request
+        contentType: application/json
+        schema:
+          $schema: http://json-schema.org/draft-04/schema#
+          properties:
+            Car:
+              type: object
+              properties:
+                name:
+                  type: string
+      # UPDATE
+      - name: UpdateCarRequest
+        description: Update a Car Request
+        contentType: application/json
+        schema:
+          $schema: http://json-schema.org/draft-04/schema#
+          properties:
+            Car:
+              type: object
+              properties:
+                name:
+                  type: string
+      # DELETE
+      - name: RemoveCarResponse
+        description: Remove Car Response
+        contentType: application/json
+        schema:
+          $schema: http://json-schema.org/draft-04/schema#
 functions:
   all:
-    handler: src/lambda/main.all
+    handler: src/lambda/car.lambda.all
     events:
       - http:
-          path: /main/all
+          path: /car/all
           method: GET
           documentation:
-            summary: Get all
-            description: Get all elements in database
+            summary: All
+            description: Get all cars
             methodResponses:
               - statusCode: 200
-                responseBody:
-                  description: "All Main entities"
                 responseModels:
-                  application/json: "GetMainResponse"
+                  application/json: GetCarResponse
   add:
-    handler: src/lambda/main.add
+    handler: src/lambda/car.lambda.add
     events:
       - http:
-          path: /main/
+          path: /car/
           method: POST
+          documentation:
+            summary: Add
+            description: Add a car
+            methodResponses:
+              - statusCode: 201
+                responseModels:
+                  application/json: AddCarResponse
+            requestModels:
+              application/json: AddCarRequest
   update:
-    handler: src/lambda/main.update
+    handler: src/lambda/car.lambda.update
     events:
       - http:
-          path: /main/{id}
+          path: /car/{id}
           method: PUT
+          documentation:
+            summary: Update
+            description: Update a car
+            methodResponses:
+              - statusCode: 204
+                responseModels:
+                  application/json: UpdateCarResponse
+            requestModels:
+              application/json: UpdateCarResponse
+            pathParams:
+              - name: id
+                description: The object id to update
+                schema:
+                  type: string
   remove:
-    handler: src/lambda/main.remove
+    handler: src/lambda/car.lambda.remove
     events:
       - http:
-          path: /main/{id}
+          path: /car/{id}
           method: DELETE
+          documentation:
+            summary: Remove
+            description: Remove a car
+            methodResponses:
+              - statusCode: 204
+                responseModels:
+                  application/json: RemoveCarResponse
+            requestModels:
+              application/json: RemoveCarResponse
+            pathParams:
+              - name: id
+                description: The object id to remove
+                schema:
+                  type: string

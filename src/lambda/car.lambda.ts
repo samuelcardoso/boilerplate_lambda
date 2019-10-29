@@ -1,4 +1,4 @@
-import MainService from "../services/main.service";
+import MainService from "../services/car.service";
 
 export async function all(event, context) {
   context.callbackWaitsForEmptyEventLoop = false;
