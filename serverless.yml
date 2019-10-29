@@ -18,29 +18,21 @@ functions:
       - http:
           path: /main/all
           method: GET
-          cors: true
-          caching:
-            enabled: true
-            cacheKeyParameters:
-              - name: request.querystring.cachetick
   add:
     handler: src/lambda/main.add
     events:
       - http:
           path: /main/
           method: POST
-          cors: true
   update:
     handler: src/lambda/main.update
     events:
       - http:
           path: /main/{id}
           method: PUT
-          cors: true
   remove:
     handler: src/lambda/main.remove
     events:
       - http:
           path: /main/{id}
           method: DELETE
-          cors: true
