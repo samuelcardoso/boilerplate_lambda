@@ -1,4 +1,4 @@
-export default class MainService {
+export default class CarService {
     public static async all(params = <any>{}): Promise<Array<any>> {
       return [];
     }
