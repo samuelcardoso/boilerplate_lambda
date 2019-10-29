@@ -12,6 +12,12 @@ provider:
   region: us-east-1
   runtime: nodejs8.10
   stage: samuel
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - lambda:InvokeFunction
+        - lambda:InvokeAsync
+      Resource: "*"
 
 # Open API documentation: serverless openapi generate
 custom:
