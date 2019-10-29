@@ -1,5 +1,6 @@
 # Serverless ALL
 plugins:
+  - serverless-api-gateway-caching
   - serverless-plugin-typescript
   - serverless-offline
   - serverless-openapi-documentation
@@ -14,6 +15,9 @@ provider:
 
 # Open API documentation: serverless openapi generate
 custom:
+  apiGatewayCaching:
+    enabled: true
+    ttlInSeconds: 60
   documentation:
     version: 1.0.0
     title: My Rest Car API
@@ -76,6 +80,11 @@ functions:
       - http:
           path: /car/all
           method: GET
+          cors: true
+          caching:
+            enabled: true
+            cacheKeyParameters:
+              - name: request.querystring.cachetick
           documentation:
             summary: All
             description: Get all cars
@@ -89,6 +98,7 @@ functions:
       - http:
           path: /car/
           method: POST
+          cors: true
           documentation:
             summary: Add
             description: Add a car
@@ -104,6 +114,7 @@ functions:
       - http:
           path: /car/{id}
           method: PUT
+          cors: true
           documentation:
             summary: Update
             description: Update a car
@@ -124,6 +135,7 @@ functions:
       - http:
           path: /car/{id}
           method: DELETE
+          cors: true
           documentation:
             summary: Remove
             description: Remove a car

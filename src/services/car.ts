@@ -1,6 +1,6 @@
 export default class CarService {
     public static async all(params = <any>{}): Promise<Array<any>> {
-      return [];
+      return [Math.random()];
     }
   
     public static async add(entity: any): Promise<number> {
