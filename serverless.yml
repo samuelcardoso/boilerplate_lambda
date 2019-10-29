@@ -4,6 +4,7 @@ plugins:
   - serverless-plugin-typescript
   - serverless-offline
   - serverless-openapi-documentation
+  - serverless-plugin-tracing
 
 service: boilerplatelambda
 
@@ -12,6 +13,14 @@ provider:
   region: us-east-1
   runtime: nodejs8.10
   stage: samuel
+  tracing: true
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "xray:PutTraceSegments"
+        - "xray:PutTelemetryRecords"
+      Resource:
+        - "*"
 
 # Open API documentation: serverless openapi generate
 custom:
