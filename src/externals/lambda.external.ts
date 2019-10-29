@@ -12,21 +12,16 @@ export default class LambdaExternal {
       Payload: payload ? JSON.stringify(payload) : undefined
     };
 
-    debugger;
     return new Promise<Array<any>>((resolve, reject) => {
-        debugger;
         lambda.invoke(params, (err, data) => {
         if (err) {
           console.log(err);
           return reject(err);
         }
-        debugger;
         const ans = JSON.parse(data.Payload);
-        debugger;
         if (ans.statusCode === 200) {
           return resolve(JSON.parse(ans.body));
         }
-        debugger;
         return reject();
       });
     });
