@@ -74,6 +74,8 @@ custom:
         schema:
           $schema: http://json-schema.org/draft-04/schema#
 functions:
+  bus_all:
+    handler: src/lambda/bus.all
   all:
     handler: src/lambda/car.all
     events:

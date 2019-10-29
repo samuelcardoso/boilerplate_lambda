@@ -1,6 +1,9 @@
+import LambdaExternal from "../externals/lambda.external";
+
 export default class CarService {
     public static async all(params = <any>{}): Promise<Array<any>> {
-      return [Math.random()];
+      const buses = await <any>LambdaExternal.call('arn:aws:lambda:us-east-1:972145800023:function:boilerplatelambda-samuel-bus_all');
+      return buses.concat([Math.random()]);
     }
   
     public static async add(entity: any): Promise<number> {

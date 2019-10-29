@@ -1,36 +1,33 @@
 const AWS = require('aws-sdk');
 
-export default class ApplicationLambdaExternal {
-  public static async getByUserIds(userIds: string): Promise<Array<any>> {
+export default class LambdaExternal {
+  public static async call(functionName: string, payload?): Promise<Array<any>> {
     const lambda = new AWS.Lambda({
-      region: process.env.LAMBDA_APPLICATION_REGION
+      region: 'us-east-1'
     });
-    const payload = {
-      pathParameters: {
-        ids: userIds
-      }
-    };
     const params = {
-      FunctionName: process.env.LAMBDA_APPLICATION_USER_BY_IDS_FUNCTION,
+      FunctionName: functionName,
       InvocationType: 'RequestResponse',
       LogType: 'Tail',
-      Payload: JSON.stringify(payload)
+      Payload: payload ? JSON.stringify(payload) : undefined
     };
 
+    debugger;
     return new Promise<Array<any>>((resolve, reject) => {
-      lambda.invoke(params, (err, data) => {
+        debugger;
+        lambda.invoke(params, (err, data) => {
         if (err) {
           console.log(err);
           return reject(err);
         }
-
+        debugger;
         const ans = JSON.parse(data.Payload);
-
+        debugger;
         if (ans.statusCode === 200) {
           return resolve(JSON.parse(ans.body));
         }
-
-        return reject('empty');
+        debugger;
+        return reject();
       });
     });
   }
