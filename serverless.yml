@@ -9,7 +9,7 @@ service: boilerplatelambda
 provider:
   name: aws
   region: us-east-1
-  runtime: nodejs8.10
+  runtime: nodejs10.x
   stage: samuel
 
 # Open API documentation: serverless openapi generate
